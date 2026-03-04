@@ -137,12 +137,23 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
     const cardTexture = useMemo(() => {
         const tex = cardTextureSource.clone();
         tex.colorSpace = THREE.SRGBColorSpace;
-
-        // Hapus paksaan mirroring horizontal yang lu buat sebelumnya.
-        // Jika tekstur lu terbalik atas-bawah (upside-down), 
-        // Three.js secara default mengatur flipY = true. 
-        // Ubah ke false jika orientasi bawaan dari file GLTF lu sudah benar.
         tex.flipY = false;
+
+        // Cegah gambar berulang (tiling) saat ukurannya dikecilkan
+        tex.wrapS = THREE.ClampToEdgeWrapping;
+        tex.wrapT = THREE.ClampToEdgeWrapping;
+
+        // Skala tekstur (Zoom Out). 
+        // Nilai LEBIH DARI 1 akan mengecilkan gambar.
+        // LU HARUS MENCARI ANGKA INI SENDIRI sampai pas dengan proporsi kartu lu.
+        // Contoh: mulai dari 1.1, 1.2, atau 1.5
+        const scaleX = 1.2;
+        const scaleY = 1.2;
+
+        tex.repeat.set(scaleX, scaleY);
+
+        // Geser offset biar gambar tetap berada di tengah setelah di-scale
+        tex.offset.set((1 - scaleX) / 2, (1 - scaleY) / 2);
 
         tex.needsUpdate = true;
         return tex;
