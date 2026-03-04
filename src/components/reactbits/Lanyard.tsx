@@ -137,15 +137,16 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
     const cardTexture = useMemo(() => {
         const tex = cardTextureSource.clone();
         tex.colorSpace = THREE.SRGBColorSpace;
-        // Fix horizontal mirror: flip U axis
-        tex.wrapS = THREE.RepeatWrapping;
-        tex.wrapT = THREE.ClampToEdgeWrapping;
-        tex.repeat.set(-1, 1);   // mirror X
-        tex.offset.set(1, 0);    // shift back so it's in [0,1]
+
+        // Hapus paksaan mirroring horizontal yang lu buat sebelumnya.
+        // Jika tekstur lu terbalik atas-bawah (upside-down), 
+        // Three.js secara default mengatur flipY = true. 
+        // Ubah ke false jika orientasi bawaan dari file GLTF lu sudah benar.
+        tex.flipY = false;
+
         tex.needsUpdate = true;
         return tex;
     }, [cardTextureSource]);
-
     // Build a stylish back-of-card canvas texture
     const backTexture = useMemo(() => {
         const canvas = document.createElement('canvas');
