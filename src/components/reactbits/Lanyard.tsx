@@ -1,0 +1,425 @@
+/* eslint-disable react/no-unknown-property */
+'use client';
+import { useEffect, useRef, useState, useMemo } from 'react';
+import { Canvas, extend, useFrame } from '@react-three/fiber';
+import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';
+import {
+    BallCollider,
+    CuboidCollider,
+    Physics,
+    RigidBody,
+    useRopeJoint,
+    useSphericalJoint
+} from '@react-three/rapier';
+import type { RigidBodyProps } from '@react-three/rapier';
+import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
+import * as THREE from 'three';
+
+import cardGLB from './card.glb';
+import lanyardBand from './lanyard.png';
+import idCardTexture from '@sosial/ID_CARD.png';
+
+extend({ MeshLineGeometry, MeshLineMaterial });
+
+interface LanyardProps {
+    position?: [number, number, number];
+    gravity?: [number, number, number];
+    fov?: number;
+    transparent?: boolean;
+}
+
+export default function Lanyard({
+    position = [0, 0, 20],
+    gravity = [0, -40, 0],
+    fov = 20,
+    transparent = true
+}: LanyardProps) {
+    const [isMobile, setIsMobile] = useState<boolean>(
+        () => typeof window !== 'undefined' && window.innerWidth < 768
+    );
+
+    useEffect(() => {
+        const handleResize = (): void => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return (
+        <div className="relative z-0 w-full h-full min-h-[500px] flex justify-center items-center transform scale-100 origin-center pointer-events-auto">
+            <Canvas
+                camera={{ position, fov }}
+                dpr={[1, isMobile ? 1.5 : 2]}
+                gl={{ alpha: transparent }}
+                onCreated={({ gl }) =>
+                    gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
+                }
+            >
+                <ambientLight intensity={Math.PI} />
+                <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+                    <Band isMobile={isMobile} />
+                </Physics>
+                <Environment blur={0.75}>
+                    <Lightformer
+                        intensity={2}
+                        color="white"
+                        position={[0, -1, 5]}
+                        rotation={[0, 0, Math.PI / 3]}
+                        scale={[100, 0.1, 1]}
+                    />
+                    <Lightformer
+                        intensity={3}
+                        color="white"
+                        position={[-1, -1, 1]}
+                        rotation={[0, 0, Math.PI / 3]}
+                        scale={[100, 0.1, 1]}
+                    />
+                    <Lightformer
+                        intensity={3}
+                        color="white"
+                        position={[1, 1, 1]}
+                        rotation={[0, 0, Math.PI / 3]}
+                        scale={[100, 0.1, 1]}
+                    />
+                    <Lightformer
+                        intensity={10}
+                        color="white"
+                        position={[-10, 0, 14]}
+                        rotation={[0, Math.PI / 2, Math.PI / 3]}
+                        scale={[100, 10, 1]}
+                    />
+                </Environment>
+            </Canvas>
+        </div>
+    );
+}
+
+interface BandProps {
+    maxSpeed?: number;
+    minSpeed?: number;
+    isMobile?: boolean;
+}
+
+function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const band = useRef<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const fixed = useRef<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const j1 = useRef<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const j2 = useRef<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const j3 = useRef<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const card = useRef<any>(null);
+
+    const vec = new THREE.Vector3();
+    const ang = new THREE.Vector3();
+    const rot = new THREE.Vector3();
+    const dir = new THREE.Vector3();
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const segmentProps: any = {
+        type: 'dynamic' as RigidBodyProps['type'],
+        canSleep: true,
+        colliders: false,
+        angularDamping: 4,
+        linearDamping: 4
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { nodes, materials } = useGLTF(cardGLB) as any;
+    const bandTexture = useTexture(lanyardBand);
+
+    // Load card texture FRESH (bypass drei global cache) so repeat mutations work reliably
+    const cardTexture = useMemo(() => {
+        const tex = new THREE.TextureLoader().load(idCardTexture);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        // Fix horizontal mirror: flip U axis
+        tex.wrapS = THREE.RepeatWrapping;
+        tex.wrapT = THREE.ClampToEdgeWrapping;
+        tex.repeat.set(-1, 1);   // mirror X
+        tex.offset.set(1, 0);    // shift back so it's in [0,1]
+        tex.needsUpdate = true;
+        return tex;
+    }, []);
+
+    // Build a stylish back-of-card canvas texture
+    const backTexture = useMemo(() => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 512;
+        canvas.height = 720;
+        const ctx = canvas.getContext('2d')!;
+
+        // Deep dark background
+        ctx.fillStyle = '#060010';
+        ctx.fillRect(0, 0, 512, 720);
+
+        // Radial purple glow center
+        const glowGrad = ctx.createRadialGradient(256, 300, 0, 256, 300, 340);
+        glowGrad.addColorStop(0, 'rgba(139, 92, 246, 0.25)');
+        glowGrad.addColorStop(1, 'rgba(6, 0, 16, 0)');
+        ctx.fillStyle = glowGrad;
+        ctx.fillRect(0, 0, 512, 720);
+
+        // Top & bottom accent bars
+        const barGrad = ctx.createLinearGradient(0, 0, 512, 0);
+        barGrad.addColorStop(0, 'rgba(139,92,246,0)');
+        barGrad.addColorStop(0.5, '#8b5cf6');
+        barGrad.addColorStop(1, 'rgba(139,92,246,0)');
+        ctx.fillStyle = barGrad;
+        ctx.fillRect(0, 0, 512, 4);
+        ctx.fillRect(0, 716, 512, 4);
+
+        // Monogram box
+        ctx.strokeStyle = '#8b5cf6';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(196, 120, 120, 120, 12);
+        ctx.stroke();
+
+        // "SA" monogram
+        ctx.fillStyle = '#8b5cf6';
+        ctx.font = 'bold 64px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('SA', 256, 180);
+
+        // Divider line
+        ctx.beginPath();
+        ctx.moveTo(60, 280);
+        ctx.lineTo(452, 280);
+        ctx.strokeStyle = 'rgba(139,92,246,0.3)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Name
+        ctx.fillStyle = '#f3f1f1';
+        ctx.font = 'bold 38px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillText('SUTAN A.j.', 256, 340);
+
+        // Title line 1
+        ctx.fillStyle = '#a78bfa';
+        ctx.font = '22px Arial';
+        ctx.fillText('Full-Stack Developer', 256, 388);
+
+        // Title line 2
+        ctx.fillStyle = '#a78bfa';
+        ctx.font = '22px Arial';
+        ctx.fillText('& Network Engineer', 256, 416);
+
+        // Location
+        ctx.fillStyle = '#6b6b8a';
+        ctx.font = '18px Arial';
+        ctx.fillText('📍 Indonesia', 256, 468);
+
+        // Divider
+        ctx.beginPath();
+        ctx.moveTo(60, 510);
+        ctx.lineTo(452, 510);
+        ctx.strokeStyle = 'rgba(139,92,246,0.2)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Decorative dots row
+        for (let i = 0; i < 5; i++) {
+            ctx.beginPath();
+            ctx.arc(172 + i * 42, 570, i === 2 ? 7 : 4, 0, Math.PI * 2);
+            ctx.fillStyle = i === 2 ? '#8b5cf6' : 'rgba(139,92,246,0.3)';
+            ctx.fill();
+        }
+
+        // Website / portfolio
+        ctx.fillStyle = '#4c4c7a';
+        ctx.font = '16px monospace';
+        ctx.fillText('portofolio.vercel.app', 256, 635);
+
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        return tex;
+    }, []);
+
+    const [curve] = useState(
+        () =>
+            new THREE.CatmullRomCurve3([
+                new THREE.Vector3(),
+                new THREE.Vector3(),
+                new THREE.Vector3(),
+                new THREE.Vector3()
+            ])
+    );
+    const [dragged, drag] = useState<false | THREE.Vector3>(false);
+    const [hovered, hover] = useState(false);
+
+    useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
+    useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
+    useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
+    useSphericalJoint(j3, card, [
+        [0, 0, 0],
+        [0, 1.45, 0]
+    ]);
+
+    useEffect(() => {
+        if (hovered) {
+            document.body.style.cursor = dragged ? 'grabbing' : 'grab';
+            return () => {
+                document.body.style.cursor = 'auto';
+            };
+        }
+    }, [hovered, dragged]);
+
+    useFrame((state, delta) => {
+        if (dragged && typeof dragged !== 'boolean') {
+            vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
+            dir.copy(vec).sub(state.camera.position).normalize();
+            vec.add(dir.multiplyScalar(state.camera.position.length()));
+            [card, j1, j2, j3, fixed].forEach(ref => ref.current?.wakeUp());
+            card.current?.setNextKinematicTranslation({
+                x: vec.x - dragged.x,
+                y: vec.y - dragged.y,
+                z: vec.z - dragged.z
+            });
+        }
+        if (fixed.current) {
+            [j1, j2].forEach(ref => {
+                if (!ref.current.lerped)
+                    ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
+                const clampedDistance = Math.max(
+                    0.1,
+                    Math.min(1, ref.current.lerped.distanceTo(ref.current.translation()))
+                );
+                ref.current.lerped.lerp(
+                    ref.current.translation(),
+                    delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
+                );
+            });
+            curve.points[0].copy(j3.current.translation());
+            curve.points[1].copy(j2.current.lerped);
+            curve.points[2].copy(j1.current.lerped);
+            curve.points[3].copy(fixed.current.translation());
+            band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
+            ang.copy(card.current.angvel());
+            rot.copy(card.current.rotation());
+            card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
+        }
+    });
+
+    curve.curveType = 'chordal';
+    bandTexture.wrapS = bandTexture.wrapT = THREE.RepeatWrapping;
+
+    return (
+        <>
+            <group position={[0, 4, 0]}>
+                <RigidBody ref={fixed} {...segmentProps} type={'fixed' as RigidBodyProps['type']} />
+                <RigidBody
+                    position={[0.5, 0, 0]}
+                    ref={j1}
+                    {...segmentProps}
+                    type={'dynamic' as RigidBodyProps['type']}
+                >
+                    <BallCollider args={[0.1]} />
+                </RigidBody>
+                <RigidBody
+                    position={[1, 0, 0]}
+                    ref={j2}
+                    {...segmentProps}
+                    type={'dynamic' as RigidBodyProps['type']}
+                >
+                    <BallCollider args={[0.1]} />
+                </RigidBody>
+                <RigidBody
+                    position={[1.5, 0, 0]}
+                    ref={j3}
+                    {...segmentProps}
+                    type={'dynamic' as RigidBodyProps['type']}
+                >
+                    <BallCollider args={[0.1]} />
+                </RigidBody>
+                <RigidBody
+                    position={[2, 0, 0]}
+                    ref={card}
+                    {...segmentProps}
+                    type={
+                        dragged
+                            ? ('kinematicPosition' as RigidBodyProps['type'])
+                            : ('dynamic' as RigidBodyProps['type'])
+                    }
+                >
+                    <CuboidCollider args={[0.8, 1.125, 0.01]} />
+                    <group
+                        scale={2.25}
+                        position={[0, -1.2, -0.05]}
+                        onPointerOver={() => hover(true)}
+                        onPointerOut={() => hover(false)}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        onPointerUp={(e: any) => {
+                            e.target.releasePointerCapture(e.pointerId);
+                            drag(false);
+                        }}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        onPointerDown={(e: any) => {
+                            e.target.setPointerCapture(e.pointerId);
+                            drag(
+                                new THREE.Vector3()
+                                    .copy(e.point)
+                                    .sub(vec.copy(card.current.translation()))
+                            );
+                        }}
+                    >
+                        {/* ── FRONT face: ID_CARD.png texture ── */}
+                        <mesh geometry={nodes.card.geometry}>
+                            <meshPhysicalMaterial
+                                map={cardTexture}
+                                map-anisotropy={16}
+                                clearcoat={isMobile ? 0 : 1}
+                                clearcoatRoughness={0.15}
+                                roughness={0.3}
+                                metalness={0.1}
+                                side={THREE.FrontSide}
+                            />
+                        </mesh>
+
+                        {/* ── BACK face: stylized portfolio info card ── */}
+                        <mesh
+                            geometry={nodes.card.geometry}
+                            rotation={[0, Math.PI, 0]}
+                            position={[0, 0, -0.002]}
+                        >
+                            <meshPhysicalMaterial
+                                map={backTexture}
+                                map-anisotropy={16}
+                                clearcoat={isMobile ? 0 : 1}
+                                clearcoatRoughness={0.2}
+                                roughness={0.4}
+                                metalness={0.15}
+                                side={THREE.FrontSide}
+                            />
+                        </mesh>
+
+                        {/* ── Hardware: clip & clamp ── */}
+                        <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
+                        <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
+                    </group>
+                </RigidBody>
+            </group>
+
+            {/* ── Lanyard band ── */}
+            <mesh ref={band}>
+                {/* @ts-ignore */}
+                <meshLineGeometry />
+                {/* @ts-ignore */}
+                <meshLineMaterial
+                    color="white"
+                    depthTest={false}
+                    resolution={isMobile ? [1000, 2000] : [1000, 1000]}
+                    useMap
+                    map={bandTexture}
+                    repeat={[-4, 1]}
+                    lineWidth={1}
+                />
+            </mesh>
+        </>
+    );
+}

@@ -1,0 +1,27 @@
+﻿
+C:\DATA SUTAN ARLIE JOHAN\Code Johan\PortoV2\src\components\reactbits\Silk.tsx
+  1:1  error  Definition for rule 'react/no-unknown-property' was not found  react/no-unknown-property
+
+C:\DATA SUTAN ARLIE JOHAN\Code Johan\PortoV2\src\components\reactbits\SplitText.tsx
+  59:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\DATA SUTAN ARLIE JOHAN\Code Johan\PortoV2\src\components\reactbits\SplitText.tsx:59:13
+  57 |     useEffect(() => {
+  58 |         if (document.fonts.status === 'loaded') {
+> 59 |             setFontsLoaded(true);
+     |             ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  60 |         } else {
+  61 |             document.fonts.ready.then(() => {
+  62 |                 setFontsLoaded(true);  react-hooks/set-state-in-effect
+
+C:\DATA SUTAN ARLIE JOHAN\Code Johan\PortoV2\src\components\sections\Hero.tsx
+  12:57  error  '_socials' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 3 problems (3 errors, 0 warnings)
+
