@@ -49,6 +49,7 @@ export interface Project {
     repoUrl?: string;
     featured: boolean;
     category: string;
+    award?: string;
 }
 
 export interface Experience {

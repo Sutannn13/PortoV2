@@ -1,115 +1,31 @@
-import { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SplitText from '@/components/reactbits/SplitText';
-import type { Skill, SkillCategory } from '@/types';
+import CircularGallery from '@/components/reactbits/CircularGallery';
 
-gsap.registerPlugin(ScrollTrigger);
+// ─────────────────────────────────────────────
+// Skills Section — Combined CircularGallery & Cards
+// Tech stack items with devicon logos 
+// rendered as a 1 row interactive tech bar
+// ─────────────────────────────────────────────
 
-interface SkillsProps {
-    skills: Skill[];
-}
+const techItems = [
+    { image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg', text: 'React' },
+    { image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg', text: 'TypeScript' },
+    { image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg', text: 'Tailwind CSS' },
+    { image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg', text: 'HTML / CSS' },
+    { image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg', text: 'JavaScript' },
+    { image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg', text: 'Laravel' },
+    { image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg', text: 'PHP' },
+    { image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg', text: 'Node.js' },
+    { image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg', text: 'MySQL' },
+    { image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg', text: 'Git' },
+];
 
-const categoryLabels: Record<SkillCategory, string> = {
-    frontend: 'Frontend',
-    backend: 'Backend',
-    networking: 'Networking',
-    database: 'Database',
-    tools: 'Tools & DevOps',
-    other: 'Other',
-};
-
-const categoryColors: Record<SkillCategory, string> = {
-    frontend: 'from-violet-500/20 to-blue-500/20',
-    backend: 'from-emerald-500/20 to-teal-500/20',
-    networking: 'from-amber-500/20 to-orange-500/20',
-    database: 'from-rose-500/20 to-pink-500/20',
-    tools: 'from-cyan-500/20 to-sky-500/20',
-    other: 'from-gray-500/20 to-slate-500/20',
-};
-
-const SkillBar: React.FC<{ skill: Skill; index: number }> = ({
-    skill,
-    index,
-}) => {
-    const barRef = useRef<HTMLDivElement>(null);
-    const fillRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.fromTo(
-                barRef.current,
-                { opacity: 0, x: -20 },
-                {
-                    opacity: 1,
-                    x: 0,
-                    duration: 0.5,
-                    delay: index * 0.05,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: barRef.current,
-                        start: 'top 90%',
-                        once: true,
-                    },
-                }
-            );
-
-            gsap.fromTo(
-                fillRef.current,
-                { scaleX: 0 },
-                {
-                    scaleX: 1,
-                    duration: 1,
-                    delay: index * 0.05 + 0.3,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: barRef.current,
-                        start: 'top 90%',
-                        once: true,
-                    },
-                }
-            );
-        });
-        return () => ctx.revert();
-    }, [index]);
-
-    return (
-        <div ref={barRef} className="opacity-0">
-            <div className="mb-1.5 flex items-center justify-between">
-                <span className="text-sm font-medium text-text-primary">
-                    {skill.name}
-                </span>
-                <span className="font-mono text-xs text-text-muted">
-                    {skill.proficiency}%
-                </span>
-            </div>
-            <div className="h-1.5 overflow-hidden rounded-full bg-bg-card">
-                <div
-                    ref={fillRef}
-                    className="h-full origin-left rounded-full bg-gradient-to-r from-accent to-accent-light"
-                    style={{ width: `${skill.proficiency}%` }}
-                />
-            </div>
-        </div>
-    );
-};
-
-const Skills: React.FC<SkillsProps> = ({ skills }) => {
-    // Group skills by category
-    const grouped = skills.reduce(
-        (acc, skill) => {
-            if (!acc[skill.category]) acc[skill.category] = [];
-            acc[skill.category].push(skill);
-            return acc;
-        },
-        {} as Record<SkillCategory, Skill[]>
-    );
-
+const Skills: React.FC = () => {
     return (
         <section id="skills" className="relative z-10 py-section px-6">
             <div className="mx-auto max-w-6xl">
                 {/* Section Header */}
-                <div className="mb-16 text-center">
+                <div className="mb-2 text-center">
                     <span className="section-label mb-4 block">Expertise</span>
                     <SplitText
                         text="Skills & Technologies"
@@ -121,34 +37,22 @@ const Skills: React.FC<SkillsProps> = ({ skills }) => {
                         from={{ opacity: 0, y: 30 }}
                         to={{ opacity: 1, y: 0 }}
                     />
+                    <p className="mt-4 text-text-secondary text-sm max-w-md mx-auto">
+                        Drag or scroll the tech bar to explore my stack
+                    </p>
                 </div>
+            </div>
 
-                {/* Skills Grid */}
-                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {(Object.keys(grouped) as SkillCategory[]).map((category) => (
-                        <div
-                            key={category}
-                            className="group rounded-2xl border border-border bg-bg-card p-6 transition-all duration-500 hover:border-border-hover"
-                        >
-                            {/* Category Header */}
-                            <div className="mb-5 flex items-center gap-3">
-                                <div
-                                    className={`h-8 w-8 rounded-lg bg-gradient-to-br ${categoryColors[category]}`}
-                                />
-                                <h3 className="font-display text-base font-semibold text-text-primary">
-                                    {categoryLabels[category]}
-                                </h3>
-                            </div>
-
-                            {/* Skill Bars */}
-                            <div className="flex flex-col gap-4">
-                                {grouped[category].map((skill, i) => (
-                                    <SkillBar key={skill.id} skill={skill} index={i} />
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
+            {/* CircularGallery as a 1 row tech bar */}
+            <div className="mx-auto mt-4" style={{ height: '350px', position: 'relative', maxWidth: '1200px' }}>
+                <CircularGallery
+                    items={techItems}
+                    bend={1}
+                    textColor="#ffffff"
+                    borderRadius={0.06}
+                    scrollSpeed={2}
+                    scrollEase={0.05}
+                />
             </div>
         </section>
     );

@@ -4,11 +4,11 @@ import { gsap } from 'gsap';
 // removed unused SplitText import
 import TextPressure from '@/components/reactbits/TextPressure';
 import DecryptedText from '@/components/reactbits/DecryptedText';
-import type { PersonalInfo, SocialLink } from '@/types';
+import Shuffle from '@/components/reactbits/Shuffle';
+import type { PersonalInfo } from '@/types';
 
 interface HeroProps {
     personal: PersonalInfo;
-    socials: SocialLink[];
 }
 
 const Hero: React.FC<HeroProps> = ({ personal }) => {
@@ -79,9 +79,23 @@ const Hero: React.FC<HeroProps> = ({ personal }) => {
                                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
                                 <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
                             </span>
-                            <span className="font-mono text-xs tracking-wide text-accent-light">
-                                Available for work
-                            </span>
+                            <Shuffle
+                                text="Available for intern"
+                                tag="span"
+                                className="font-mono text-xs tracking-wide text-accent-light"
+                                shuffleDirection="right"
+                                duration={0.35}
+                                animationMode="evenodd"
+                                shuffleTimes={1}
+                                ease="power3.out"
+                                stagger={0.03}
+                                threshold={0.1}
+                                triggerOnce={true}
+                                triggerOnHover={false}
+                                respectReducedMotion={true}
+                                loop={false}
+                                loopDelay={0}
+                            />
                         </div>
                     )}
                 </div>

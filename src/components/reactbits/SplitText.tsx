@@ -27,6 +27,10 @@ interface SplitTextProps {
     textAlign?: CSSProperties['textAlign'];
     tag?: keyof React.JSX.IntrinsicElements;
     onLetterAnimationComplete?: () => void;
+    toggleActions?: string;
+    scrub?: boolean | number;
+    once?: boolean;
+    end?: string;
 }
 
 const SplitText: React.FC<SplitTextProps> = ({
@@ -43,6 +47,10 @@ const SplitText: React.FC<SplitTextProps> = ({
     textAlign = 'center',
     tag = 'p',
     onLetterAnimationComplete,
+    toggleActions = 'play none none none',
+    scrub,
+    once = true,
+    end = 'bottom center',
 }) => {
     const ref = useRef<HTMLElement>(null);
     const animationCompletedRef = useRef(false);
@@ -128,9 +136,12 @@ const SplitText: React.FC<SplitTextProps> = ({
                             scrollTrigger: {
                                 trigger: el,
                                 start,
-                                once: true,
+                                once,
+                                scrub,
+                                toggleActions,
                                 fastScrollEnd: true,
                                 anticipatePin: 0.4,
+                                end,
                             },
                             onComplete: () => {
                                 animationCompletedRef.current = true;

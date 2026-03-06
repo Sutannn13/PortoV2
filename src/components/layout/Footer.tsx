@@ -1,21 +1,35 @@
 import { Github, Linkedin, Instagram, Mail, Heart } from 'lucide-react';
-import type { SocialLink } from '@/types';
+import Dock from '@/components/reactbits/Dock';
 
 interface FooterProps {
-    socials: SocialLink[];
     name: string;
 }
 
-const iconMap: Record<string, React.FC<{ size?: number; className?: string }>> =
-{
-    github: Github,
-    linkedin: Linkedin,
-    instagram: Instagram,
-    mail: Mail,
-};
-
-const Footer: React.FC<FooterProps> = ({ socials, name }) => {
+const Footer: React.FC<FooterProps> = ({ name }) => {
     const year = new Date().getFullYear();
+
+    const dockItems = [
+        {
+            icon: <Github size={18} />,
+            label: 'GitHub',
+            onClick: () => window.open('https://github.com/Sutannn13', '_blank')
+        },
+        {
+            icon: <Instagram size={18} />,
+            label: 'Instagram',
+            onClick: () => window.open('https://www.instagram.com/arlie.sutan', '_blank')
+        },
+        {
+            icon: <Linkedin size={18} />,
+            label: 'LinkedIn',
+            onClick: () => window.open('https://www.linkedin.com/authwall?trk=bf&trkInfo=AQEBZ2wYPsRluQAAAZy7MwkQqLxSwDFvwrg-5s7Rg1w3BpR5eCenFcj_2kOO93gH5ioL4ewe3TgmAVICmPOz6dHSV_OAB-jw-ptrhTlZoiSj-9GFO549K0mJONNOCfBD5JR0WPk=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fsutan-arlie-38877635b', '_blank')
+        },
+        {
+            icon: <Mail size={18} />,
+            label: 'Email',
+            onClick: () => (window.location.href = 'mailto:sutanarliejohan@gmail.com')
+        },
+    ];
 
     return (
         <footer
@@ -23,28 +37,14 @@ const Footer: React.FC<FooterProps> = ({ socials, name }) => {
             className="relative z-10 border-t border-border py-12"
         >
             <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-6">
-                {/* Social Links */}
-                <div className="flex items-center gap-4">
-                    {socials.map((social) => {
-                        const Icon = iconMap[social.icon];
-                        return (
-                            <a
-                                key={social.id}
-                                href={social.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={social.label}
-                                className="group flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-muted transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]"
-                            >
-                                {Icon && (
-                                    <Icon
-                                        size={18}
-                                        className="transition-transform duration-300 group-hover:scale-110"
-                                    />
-                                )}
-                            </a>
-                        );
-                    })}
+                {/* Social Links Dock */}
+                <div className="flex h-[80px] w-full items-center justify-center relative">
+                    <Dock
+                        items={dockItems}
+                        panelHeight={60}
+                        baseItemSize={44}
+                        magnification={70}
+                    />
                 </div>
 
                 {/* Copyright */}

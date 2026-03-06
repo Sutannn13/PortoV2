@@ -9,15 +9,16 @@ import {
     Physics,
     RigidBody,
     useRopeJoint,
-    useSphericalJoint
+    useSphericalJoint,
+    type RigidBodyProps
 } from '@react-three/rapier';
-import type { RigidBodyProps } from '@react-three/rapier';
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import * as THREE from 'three';
 
+// card.glb  : custom 3D card model (already has front texture baked in as materials.base.map)
+// LanyardKu.png : custom lanyard band texture design
 import cardGLB from './card.glb';
-import lanyardBand from './lanyard.png';
-import idCardTexture from '@sosial/ID_CARD.png';
+import lanyardTexture from './LanyardKu.png';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
@@ -31,7 +32,7 @@ interface LanyardProps {
 export default function Lanyard({
     position = [0, 0, 20],
     gravity = [0, -40, 0],
-    fov = 20,
+    fov = 14,
     transparent = true
 }: LanyardProps) {
     const [isMobile, setIsMobile] = useState<boolean>(
@@ -100,18 +101,14 @@ interface BandProps {
 }
 
 function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     const band = useRef<any>(null);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const fixed = useRef<any>(null);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const j1 = useRef<any>(null);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const j2 = useRef<any>(null);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const j3 = useRef<any>(null);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const card = useRef<any>(null);
+    /* eslint-enable @typescript-eslint/no-explicit-any */
 
     const vec = new THREE.Vector3();
     const ang = new THREE.Vector3();
@@ -127,133 +124,19 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
         linearDamping: 4
     };
 
+    // Load custom card GLB — front face texture is baked in as materials.base.map
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { nodes, materials } = useGLTF(cardGLB) as any;
 
-    // Load textures via Suspense logic natively, then clone for the card to mutate UV scaling
-    const bandTexture = useTexture(lanyardBand);
-    const cardTextureSource = useTexture(idCardTexture);
-
-    const cardTexture = useMemo(() => {
-        const tex = cardTextureSource.clone();
-        tex.colorSpace = THREE.SRGBColorSpace;
-        tex.flipY = false;
-
-        // Cegah gambar berulang (tiling) saat ukurannya dikecilkan
-        tex.wrapS = THREE.ClampToEdgeWrapping;
-        tex.wrapT = THREE.ClampToEdgeWrapping;
-
-        // Skala tekstur (Zoom Out). 
-        // Nilai LEBIH DARI 1 akan mengecilkan gambar.
-        // LU HARUS MENCARI ANGKA INI SENDIRI sampai pas dengan proporsi kartu lu.
-        // Contoh: mulai dari 1.1, 1.2, atau 1.5
-        const scaleX = 1.2;
-        const scaleY = 1.2;
-
-        tex.repeat.set(scaleX, scaleY);
-
-        // Geser offset biar gambar tetap berada di tengah setelah di-scale
-        tex.offset.set((1 - scaleX) / 2, (1 - scaleY) / 2);
-
-        tex.needsUpdate = true;
-        return tex;
-    }, [cardTextureSource]);
-    // Build a stylish back-of-card canvas texture
-    const backTexture = useMemo(() => {
-        const canvas = document.createElement('canvas');
-        canvas.width = 512;
-        canvas.height = 720;
-        const ctx = canvas.getContext('2d')!;
-
-        // Deep dark background
-        ctx.fillStyle = '#060010';
-        ctx.fillRect(0, 0, 512, 720);
-
-        // Radial purple glow center
-        const glowGrad = ctx.createRadialGradient(256, 300, 0, 256, 300, 340);
-        glowGrad.addColorStop(0, 'rgba(139, 92, 246, 0.25)');
-        glowGrad.addColorStop(1, 'rgba(6, 0, 16, 0)');
-        ctx.fillStyle = glowGrad;
-        ctx.fillRect(0, 0, 512, 720);
-
-        // Top & bottom accent bars
-        const barGrad = ctx.createLinearGradient(0, 0, 512, 0);
-        barGrad.addColorStop(0, 'rgba(139,92,246,0)');
-        barGrad.addColorStop(0.5, '#8b5cf6');
-        barGrad.addColorStop(1, 'rgba(139,92,246,0)');
-        ctx.fillStyle = barGrad;
-        ctx.fillRect(0, 0, 512, 4);
-        ctx.fillRect(0, 716, 512, 4);
-
-        // Monogram box
-        ctx.strokeStyle = '#8b5cf6';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.roundRect(196, 120, 120, 120, 12);
-        ctx.stroke();
-
-        // "SA" monogram
-        ctx.fillStyle = '#8b5cf6';
-        ctx.font = 'bold 64px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('SA', 256, 180);
-
-        // Divider line
-        ctx.beginPath();
-        ctx.moveTo(60, 280);
-        ctx.lineTo(452, 280);
-        ctx.strokeStyle = 'rgba(139,92,246,0.3)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        // Name
-        ctx.fillStyle = '#f3f1f1';
-        ctx.font = 'bold 38px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'alphabetic';
-        ctx.fillText('SUTAN A.j.', 256, 340);
-
-        // Title line 1
-        ctx.fillStyle = '#a78bfa';
-        ctx.font = '22px Arial';
-        ctx.fillText('Full-Stack Developer', 256, 388);
-
-        // Title line 2
-        ctx.fillStyle = '#a78bfa';
-        ctx.font = '22px Arial';
-        ctx.fillText('& Network Engineer', 256, 416);
-
-        // Location
-        ctx.fillStyle = '#6b6b8a';
-        ctx.font = '18px Arial';
-        ctx.fillText('📍 Indonesia', 256, 468);
-
-        // Divider
-        ctx.beginPath();
-        ctx.moveTo(60, 510);
-        ctx.lineTo(452, 510);
-        ctx.strokeStyle = 'rgba(139,92,246,0.2)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        // Decorative dots row
-        for (let i = 0; i < 5; i++) {
-            ctx.beginPath();
-            ctx.arc(172 + i * 42, 570, i === 2 ? 7 : 4, 0, Math.PI * 2);
-            ctx.fillStyle = i === 2 ? '#8b5cf6' : 'rgba(139,92,246,0.3)';
-            ctx.fill();
-        }
-
-        // Website / portfolio
-        ctx.fillStyle = '#4c4c7a';
-        ctx.font = '16px monospace';
-        ctx.fillText('portofolio.vercel.app', 256, 635);
-
-        const tex = new THREE.CanvasTexture(canvas);
-        tex.colorSpace = THREE.SRGBColorSpace;
-        return tex;
-    }, []);
+    // ── Lanyard band texture ────────────────────────────────────────────────
+    // Load LanyardKu.png and configure tiling for the rope/band mesh
+    const bandTexSource = useTexture(lanyardTexture);
+    const bandTex = useMemo(() => {
+        const t = bandTexSource.clone();
+        t.wrapS = t.wrapT = THREE.RepeatWrapping;
+        t.needsUpdate = true;
+        return t;
+    }, [bandTexSource]);
 
     const [curve] = useState(
         () =>
@@ -321,7 +204,6 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
     });
 
     curve.curveType = 'chordal';
-    bandTexture.wrapS = bandTexture.wrapT = THREE.RepeatWrapping;
 
     return (
         <>
@@ -382,55 +264,37 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
                             );
                         }}
                     >
-                        {/* ── FRONT face: ID_CARD.png texture ── */}
+                        {/* ── CARD: front & back use the same baked texture from card.glb ── */}
                         <mesh geometry={nodes.card.geometry}>
                             <meshPhysicalMaterial
-                                map={cardTexture}
+                                map={materials.base.map}
                                 map-anisotropy={16}
                                 clearcoat={isMobile ? 0 : 1}
                                 clearcoatRoughness={0.15}
-                                roughness={0.3}
-                                metalness={0.1}
-                                side={THREE.FrontSide}
+                                roughness={0.9}
+                                metalness={0.8}
                             />
                         </mesh>
 
-                        {/* ── BACK face: stylized portfolio info card ── */}
-                        <mesh
-                            geometry={nodes.card.geometry}
-                            rotation={[0, Math.PI, 0]}
-                            position={[0, 0, -0.002]}
-                        >
-                            <meshPhysicalMaterial
-                                map={backTexture}
-                                map-anisotropy={16}
-                                clearcoat={isMobile ? 0 : 1}
-                                clearcoatRoughness={0.2}
-                                roughness={0.4}
-                                metalness={0.15}
-                                side={THREE.FrontSide}
-                            />
-                        </mesh>
-
-                        {/* ── Hardware: clip & clamp ── */}
+                        {/* ── Hardware ── */}
                         <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
                         <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
                     </group>
                 </RigidBody>
             </group>
 
-            {/* ── Lanyard band ── */}
+            {/* ── Lanyard band: uses LanyardKu.png with tiling ── */}
             <mesh ref={band}>
-                {/* @ts-ignore */}
+                {/* @ts-expect-error - MeshLineGeometry is from meshline library */}
                 <meshLineGeometry />
-                {/* @ts-ignore */}
+                {/* @ts-expect-error - MeshLineMaterial is from meshline library */}
                 <meshLineMaterial
                     color="white"
                     depthTest={false}
                     resolution={isMobile ? [1000, 2000] : [1000, 1000]}
                     useMap
-                    map={bandTexture}
-                    repeat={[4, 1]}
+                    map={bandTex}
+                    repeat={[-4, 1]}
                     lineWidth={1}
                 />
             </mesh>

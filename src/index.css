@@ -173,35 +173,21 @@ body {
 }
 
 /* ─────────────────────────────────────────────
-   Silk Background Container
+   Aurora Background Container
    ───────────────────────────────────────────── */
 
-.silk-bg {
+.aurora-bg {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 1.0;
 }
 
-.silk-bg canvas {
+.aurora-bg canvas {
   display: block;
   width: 100% !important;
   height: 100% !important;
-}
-
-/* ─────────────────────────────────────────────
-   Gradient Overlay
-   ───────────────────────────────────────────── */
-
-.gradient-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: 
-    radial-gradient(ellipse 80% 50% at 50% 0%, transparent 0%, var(--color-bg-primary) 100%),
-    linear-gradient(180deg, transparent 0%, var(--color-bg-primary) 100%);
 }
 
 /* ─────────────────────────────────────────────

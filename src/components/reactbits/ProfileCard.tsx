@@ -379,7 +379,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     // Complex styles that require CSS variables and can't be done with Tailwind
     const shineStyle = {
         maskImage: 'var(--icon)',
-        maskMode: 'luminance' as const,
+        maskMode: 'luminance',
         maskRepeat: 'repeat',
         maskSize: '150%',
         maskPosition: 'top calc(200% - (var(--background-y) * 5)) left calc(100% - var(--background-x))',
@@ -523,7 +523,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                                 style={{
                                     transformOrigin: '50% 100%',
                                     transform:
-                                        'translateX(calc(-50% + (var(--pointer-from-left) - 0.5) * 6px)) translateZ(0) scaleY(calc(1 + (var(--pointer-from-top) - 0.5) * 0.02)) scaleX(calc(1 + (var(--pointer-from-left) - 0.5) * 0.01))',
+                                        'translateX(calc(-50% + (var(--pointer-from-left) - 0.5) * 6px)) translateY(12%) translateZ(0) scale(0.75) scaleY(calc(1 + (var(--pointer-from-top) - 0.5) * 0.02)) scaleX(calc(1 + (var(--pointer-from-left) - 0.5) * 0.01))',
                                     borderRadius: cardRadius,
                                     backfaceVisibility: 'hidden'
                                 }}
