@@ -55,11 +55,40 @@ const Contact: React.FC<ContactProps> = ({ personal }) => {
         return () => ctx.revert();
     }, []);
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // In a real app, send form data to an API
-        setSubmitted(true);
-        setTimeout(() => setSubmitted(false), 3000);
+
+        const form = e.currentTarget;
+        const nameInput = document.getElementById('contact-name') as HTMLInputElement;
+        const emailInput = document.getElementById('contact-email') as HTMLInputElement;
+        const messageInput = document.getElementById('contact-message') as HTMLTextAreaElement;
+
+        try {
+            const response = await fetch("https://formsubmit.co/ajax/sutanarliejohan@gmail.com", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: nameInput.value,
+                    email: emailInput.value,
+                    message: messageInput.value,
+                    _subject: `New Portfolio Contact from ${nameInput.value}`
+                })
+            });
+
+            if (response.ok) {
+                setSubmitted(true);
+                form.reset(); // Mengosongkan text di form setelah berhasil dikirim
+                setTimeout(() => setSubmitted(false), 3000);
+            } else {
+                throw new Error("Failed to send message");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Maaf, terjadi kesalahan saat mengirim pesan. Coba lagi nanti.");
+        }
     };
 
     return (

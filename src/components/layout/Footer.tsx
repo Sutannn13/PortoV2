@@ -1,11 +1,11 @@
-import { Github, Linkedin, Instagram, Mail, Heart } from 'lucide-react';
+import { Github, Linkedin, Instagram, Mail } from 'lucide-react';
 import Dock from '@/components/reactbits/Dock';
 
 interface FooterProps {
     name: string;
 }
 
-const Footer: React.FC<FooterProps> = ({ name }) => {
+const Footer: React.FC<FooterProps> = () => {
     const year = new Date().getFullYear();
 
     const dockItems = [
@@ -49,8 +49,7 @@ const Footer: React.FC<FooterProps> = ({ name }) => {
 
                 {/* Copyright */}
                 <p className="flex items-center gap-1.5 text-xs text-text-muted">
-                    © {year} {name}. Built with{' '}
-                    <Heart size={12} className="text-accent" fill="currentColor" />
+                    © {year} Sutan Arlie Johan Portofolio
                 </p>
             </div>
         </footer>
