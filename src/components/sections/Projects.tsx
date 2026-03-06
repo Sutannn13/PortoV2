@@ -166,8 +166,8 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
 
             <div className="mx-auto max-w-6xl">
                 {/* Section Header */}
-                <div className="mb-16 text-center">
-                    <span className="section-label mb-4 block">Portfolio</span>
+                <div className="mb-12 sm:mb-16 text-center">
+                    <span className="section-label mb-3 sm:mb-4 block">Portfolio</span>
                     <SplitText
                         text="Selected Projects"
                         className="font-display text-3xl font-bold text-text-primary sm:text-4xl md:text-5xl"
@@ -180,8 +180,8 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                     />
                 </div>
 
-                {/* Projects Grid — 2 cards centered */}
-                <div className="grid gap-8 sm:grid-cols-2 max-w-4xl mx-auto">
+                {/* Projects Grid */}
+                <div className="grid gap-6 sm:gap-8 md:grid-cols-2 max-w-4xl mx-auto">
                     {projects.map((project, i) => (
                         <ProjectCard key={project.id} project={project} index={i} />
                     ))}

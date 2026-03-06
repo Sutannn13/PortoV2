@@ -444,7 +444,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     return (
         <div
             ref={wrapRef}
-            className={`relative touch-none ${className}`.trim()}
+            className={`relative touch-none w-full ${className}`.trim()}
             style={{ perspective: '500px', transform: 'translate3d(0, 0, 0.1px)', ...cardStyle } as React.CSSProperties}
         >
             {behindGlowEnabled && (
@@ -459,10 +459,12 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
             )}
             <div ref={shellRef} className="relative z-[1] group">
                 <section
-                    className="grid relative overflow-hidden"
+                    className="grid relative overflow-hidden mx-auto w-full"
                     style={{
-                        height: '80svh',
-                        maxHeight: '540px',
+                        height: '100%',
+                        minHeight: '320px',
+                        maxHeight: 'min(80vh, 540px)',
+                        maxWidth: '387px',
                         aspectRatio: '0.718',
                         borderRadius: cardRadius,
                         backgroundBlendMode: 'color-dodge, normal, normal, normal',
@@ -534,24 +536,24 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                             />
                             {showUserInfo && (
                                 <div
-                                    className="absolute z-[2] flex items-center justify-between backdrop-blur-[30px] border border-white/10 pointer-events-auto"
+                                    className="absolute z-[2] flex flex-row items-center justify-between backdrop-blur-[30px] border border-white/10 pointer-events-auto flex-wrap gap-2 sm:flex-nowrap sm:gap-0"
                                     style={
                                         {
-                                            '--ui-inset': '20px',
+                                            '--ui-inset': '12px',
                                             '--ui-radius-bias': '6px',
                                             bottom: 'var(--ui-inset)',
                                             left: 'var(--ui-inset)',
                                             right: 'var(--ui-inset)',
                                             background: 'rgba(255, 255, 255, 0.1)',
                                             borderRadius: 'calc(max(0px, var(--card-radius) - var(--ui-inset) + var(--ui-radius-bias)))',
-                                            padding: '12px 14px'
+                                            padding: '8px 10px'
                                         } as React.CSSProperties
                                     }
                                 >
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-2 sm:gap-3">
                                         <div
                                             className="rounded-full overflow-hidden border border-white/10 flex-shrink-0"
-                                            style={{ width: '48px', height: '48px' }}
+                                            style={{ width: '40px', height: '40px' }}
                                         >
                                             <img
                                                 className="w-full h-full object-cover rounded-full"
@@ -566,13 +568,13 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                                                 }}
                                             />
                                         </div>
-                                        <div className="flex flex-col items-start gap-1.5">
-                                            <div className="text-sm font-medium text-white/90 leading-none">@{handle}</div>
-                                            <div className="text-sm text-white/70 leading-none">{status}</div>
+                                        <div className="flex flex-col items-start gap-1">
+                                            <div className="text-xs sm:text-sm font-medium text-white/90 leading-none">@{handle}</div>
+                                            <div className="text-[10px] sm:text-xs text-white/70 leading-none">{status}</div>
                                         </div>
                                     </div>
                                     <button
-                                        className="border border-white/10 rounded-lg px-4 py-3 text-xs font-semibold text-white/90 cursor-pointer backdrop-blur-[10px] transition-all duration-200 ease-out hover:border-white/40 hover:-translate-y-px"
+                                        className="border border-white/10 rounded-lg px-3 py-2 sm:px-4 sm:py-3 text-[10px] sm:text-xs font-semibold text-white/90 cursor-pointer backdrop-blur-[10px] transition-all duration-200 ease-out hover:border-white/40 hover:-translate-y-px"
                                         onClick={handleContactClick}
                                         style={{ pointerEvents: 'auto', display: 'block', gridArea: 'auto', borderRadius: '8px' }}
                                         type="button"
@@ -598,9 +600,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                         >
                             <div className="w-full absolute flex flex-col" style={{ top: '3em', display: 'flex', gridArea: 'auto' }}>
                                 <h3
-                                    className="font-semibold m-0"
+                                    className="font-semibold m-0 leading-tight text-center"
                                     style={{
-                                        fontSize: 'min(5svh, 3em)',
+                                        fontSize: 'clamp(1.2rem, 6vw, 2.5rem)',
                                         backgroundImage: 'linear-gradient(to bottom, #fff, #6f6fbe)',
                                         backgroundSize: '1em 1.5em',
                                         WebkitTextFillColor: 'transparent',
@@ -615,11 +617,11 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                                     {name}
                                 </h3>
                                 <p
-                                    className="font-semibold whitespace-nowrap mx-auto w-min"
+                                    className="font-semibold text-center whitespace-nowrap mx-auto"
                                     style={{
                                         position: 'relative',
-                                        top: '-12px',
-                                        fontSize: '16px',
+                                        top: '-4px',
+                                        fontSize: 'clamp(0.75rem, 4vw, 1rem)',
                                         margin: '0 auto',
                                         backgroundImage: 'linear-gradient(to bottom, #fff, #4a4ac0)',
                                         backgroundSize: '1em 1.5em',

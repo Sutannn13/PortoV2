@@ -281,7 +281,7 @@ const PillNav: React.FC<PillNavProps> = ({
                     style={{
                         width: 'var(--nav-h)',
                         height: 'var(--nav-h)',
-                        background: 'var(--base)',
+                        background: 'transparent',
                         fontSize: '16px',
                     }}
                 >
@@ -356,8 +356,8 @@ const PillNav: React.FC<PillNavProps> = ({
                     onClick={toggleMobileMenu}
                     aria-label="Toggle menu"
                     aria-expanded={isMobileMenuOpen}
-                    className="md:hidden rounded-full border-0 flex flex-col items-center justify-center gap-1 cursor-pointer p-0 relative"
-                    style={{ width: 'var(--nav-h)', height: 'var(--nav-h)', background: 'var(--base)' }}
+                    className="md:hidden rounded-full border-0 outline-none flex flex-col items-center justify-center gap-1 cursor-pointer p-0 relative"
+                    style={{ width: 'var(--nav-h)', height: 'var(--nav-h)', background: 'transparent' }}
                 >
                     <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: 'var(--pill-text)' }} />
                     <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: 'var(--pill-text)' }} />

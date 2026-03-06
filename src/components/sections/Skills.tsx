@@ -22,25 +22,25 @@ const techItems = [
 
 const Skills: React.FC = () => {
     return (
-        <section id="skills" className="relative z-10 py-section px-6">
-            <div className="mx-auto max-w-6xl">
-                {/* Section Header */}
-                <div className="mb-2 text-center">
-                    <span className="section-label mb-4 block">Expertise</span>
-                    <SplitText
-                        text="Skills & Technologies"
-                        className="font-display text-3xl font-bold text-text-primary sm:text-4xl md:text-5xl"
-                        tag="h2"
-                        delay={30}
-                        duration={0.8}
-                        splitType="words"
-                        from={{ opacity: 0, y: 30 }}
-                        to={{ opacity: 1, y: 0 }}
-                    />
-                    <p className="mt-4 text-text-secondary text-sm max-w-md mx-auto">
-                        Drag or scroll the tech bar to explore my stack
-                    </p>
-                </div>
+        <section
+            id="skills"
+            className="relative z-10 py-12 sm:py-section px-4 sm:px-6"
+        >
+            <div className="mx-auto max-w-6xl text-center">
+                <span className="section-label mb-3 sm:mb-4 block">Expertise</span>
+                <SplitText
+                    text="Skills & Technologies"
+                    className="mb-8 font-display text-3xl font-bold text-text-primary sm:text-4xl md:text-5xl"
+                    tag="h2"
+                    delay={30}
+                    duration={0.8}
+                    splitType="words"
+                    from={{ opacity: 0, y: 30 }}
+                    to={{ opacity: 1, y: 0 }}
+                />
+                <p className="mt-4 text-text-secondary text-sm max-w-md mx-auto">
+                    Drag or scroll the tech bar to explore my stack
+                </p>
             </div>
 
             {/* CircularGallery as a 1 row tech bar */}

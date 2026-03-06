@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SplitText from '@/components/reactbits/SplitText';
 import Folder from '@/components/reactbits/Folder';
 import CertificatesPage from './CertificatesPage';
@@ -10,6 +10,15 @@ interface CertificatesProps {
 
 const Certificates: React.FC<CertificatesProps> = ({ certificates }) => {
     const [isPageOpen, setIsPageOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState<boolean>(
+        () => typeof window !== 'undefined' && window.innerWidth < 768
+    );
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Prepare blurred preview items for the folder
     const folderItems = certificates.slice(0, 3).map((cert) => (
@@ -37,11 +46,16 @@ const Certificates: React.FC<CertificatesProps> = ({ certificates }) => {
 
     return (
         <>
-            <section id="certificates" className="relative z-10 py-section px-6">
-                <div className="mx-auto flex max-w-6xl flex-col items-center">
+            <section
+                id="certificates"
+                className="relative z-10 py-12 sm:py-section px-4 sm:px-6"
+            >
+                <div className="mx-auto max-w-6xl">
                     {/* Section Header */}
-                    <div className="mb-16 text-center">
-                        <span className="section-label mb-4 block w-max mx-auto">Credentials</span>
+                    <div className="mb-10 sm:mb-16 text-center">
+                        <span className="section-label mb-3 sm:mb-4 block">
+                            Achievements
+                        </span>
                         <SplitText
                             text="Certificates & Awards"
                             className="font-display text-3xl font-bold text-text-primary sm:text-4xl md:text-5xl"
@@ -58,9 +72,9 @@ const Certificates: React.FC<CertificatesProps> = ({ certificates }) => {
                     </div>
 
                     {/* Interactive Folder Animation */}
-                    <div className="relative mt-8 flex h-[350px] w-full max-w-sm items-center justify-center md:h-[450px]">
+                    <div className="relative mt-8 mx-auto flex h-[250px] sm:h-[350px] w-full max-w-sm items-center justify-center md:h-[450px]">
                         <Folder
-                            size={2.5}
+                            size={isMobile ? 1.0 : 2.5}
                             color="#5227FF"
                             className="custom-folder"
                             items={folderItems}

@@ -62,14 +62,14 @@ const About: React.FC<AboutProps> = ({ personal }) => {
         <section
             id="about"
             ref={sectionRef}
-            className="relative z-10 py-section px-6"
+            className="relative z-10 py-12 sm:py-section px-4 sm:px-6"
         >
-            <div className="mx-auto max-w-6xl rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 backdrop-blur-xl shadow-2xl md:p-12 lg:p-16">
-                <div className="grid items-center gap-12 md:gap-16 md:grid-cols-2">
+            <div className="mx-auto max-w-6xl rounded-[1.5rem] sm:rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 sm:p-8 backdrop-blur-xl shadow-2xl md:p-12 lg:p-16">
+                <div className="grid items-center gap-10 md:gap-16 md:grid-cols-2">
                     {/* Profile Lanyard */}
-                    <div ref={imageRef} className="flex justify-center opacity-0 h-[400px] sm:h-[500px] w-full relative">
+                    <div ref={imageRef} className="flex items-center justify-center mx-auto opacity-0 h-[380px] sm:h-[450px] md:h-[500px] w-full relative">
                         {lanyardDropped && (
-                            <Lanyard position={[0, 0, 15]} gravity={[0, -40, 0]} transparent={true} />
+                            <Lanyard position={[-0.5, -1, 15]} gravity={[0, -40, 0]} transparent={true} />
                         )}
                     </div>
 

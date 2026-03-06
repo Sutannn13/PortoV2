@@ -34,9 +34,9 @@ const Footer: React.FC<FooterProps> = () => {
     return (
         <footer
             id="footer"
-            className="relative z-10 border-t border-border py-12"
+            className="relative z-10 border-t border-border py-8 sm:py-12"
         >
-            <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-6">
+            <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 sm:gap-6 px-4 sm:px-6 text-center">
                 {/* Social Links Dock */}
                 <div className="flex h-[80px] w-full items-center justify-center relative">
                     <Dock

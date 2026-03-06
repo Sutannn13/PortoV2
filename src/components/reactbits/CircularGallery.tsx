@@ -376,12 +376,12 @@ class Media {
                 this.plane.program.uniforms.uViewportSizes.value = [this.viewport.width, this.viewport.height];
             }
         }
-        this.scale = this.screen.height / 1500;
+        this.scale = (this.screen.height / 1500);
         // Modified to 500x500 to render proportionally as small square cards (like TiltedCard)
         this.plane.scale.y = (this.viewport.height * (500 * this.scale)) / this.screen.height;
         this.plane.scale.x = (this.viewport.width * (500 * this.scale)) / this.screen.width;
         this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
-        this.padding = 2.5; // Slightly increased padding to give space between square cards
+        this.padding = 2; // Default padding to preserve circular spacing
         this.width = this.plane.scale.x + this.padding;
         this.widthTotal = this.width * this.length;
         this.x = this.width * this.index;

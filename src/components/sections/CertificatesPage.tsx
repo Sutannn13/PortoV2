@@ -139,7 +139,7 @@ const CertificatesPage: React.FC<CertificatesPageProps> = ({ certificates, onClo
                 </div>
             )}
 
-            <div className={`fixed inset-0 z-[100] overflow-y-auto bg-[#050010] transition-opacity duration-1000 ${showIntro ? 'opacity-0' : 'opacity-100'}`}>
+            <div className={`fixed inset-0 z-[100] overflow-y-auto overflow-x-hidden bg-[#050010] transition-opacity duration-1000 ${showIntro ? 'opacity-0' : 'opacity-100'}`}>
                 {/* ── Beams Background ── */}
                 <div className="fixed inset-0 z-0">
                     <Beams
@@ -157,8 +157,8 @@ const CertificatesPage: React.FC<CertificatesPageProps> = ({ certificates, onClo
                 {/* ── PillNav Header ── */}
                 <PillNav
                     items={pillNavItems}
-                    baseColor="rgba(22, 22, 30, 0.85)"
-                    pillColor="#060010"
+                    baseColor="transparent"
+                    pillColor="rgba(6, 0, 16, 0.6)"
                     hoveredPillTextColor="#060010"
                     pillTextColor="#f0f0f5"
                     onNavigate={handleNavClick}
@@ -167,12 +167,12 @@ const CertificatesPage: React.FC<CertificatesPageProps> = ({ certificates, onClo
                 {/* Content Container */}
                 <div className="relative z-10 mx-auto max-w-7xl px-6 py-12 md:py-20 lg:py-24">
                     <div className="mb-12 text-center sm:mb-16 md:mb-20">
-                        <span className="mb-4 mx-auto block w-max text-[#B19EEF] font-mono text-xs uppercase tracking-[0.25em]">
-                            My Sertificates
+                        <span className="mb-4 mx-auto inline-block text-[#B19EEF] font-mono text-xs uppercase tracking-[0.25em]">
+                            My Certificates
                         </span>
                         <Shuffle
                             text="Certificates & Awards"
-                            className="font-display text-4xl font-bold text-white sm:text-5xl md:text-6xl"
+                            className="font-display text-3xl font-bold text-white sm:text-5xl md:text-6xl break-words"
                             tag="h1"
                             shuffleDirection="right"
                             duration={0.35}

@@ -69,8 +69,8 @@ function App() {
       {/* ── Navigation (PillNav) ── */}
       <PillNav
         items={pillNavItems}
-        baseColor="rgba(22, 22, 30, 0.85)"
-        pillColor="#060010"
+        baseColor="transparent"
+        pillColor="rgba(6, 0, 16, 0.6)"
         hoveredPillTextColor="#060010"
         pillTextColor="#f0f0f5"
       />

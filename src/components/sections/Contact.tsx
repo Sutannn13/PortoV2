@@ -95,12 +95,12 @@ const Contact: React.FC<ContactProps> = ({ personal }) => {
         <section
             id="contact"
             ref={sectionRef}
-            className="relative z-10 py-section px-6"
+            className="relative z-10 py-12 sm:py-section px-4 sm:px-6"
         >
             <div className="mx-auto max-w-6xl">
                 {/* Section Header */}
-                <div className="mb-16 text-center">
-                    <span className="section-label mb-4 block">Get In Touch</span>
+                <div className="mb-12 sm:mb-16 text-center">
+                    <span className="section-label mb-3 sm:mb-4 block">Get In Touch</span>
                     <SplitText
                         text="Let's Work Together"
                         className="font-display text-3xl font-bold text-text-primary sm:text-4xl md:text-5xl"

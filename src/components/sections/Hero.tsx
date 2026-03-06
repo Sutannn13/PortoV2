@@ -68,13 +68,13 @@ const Hero: React.FC<HeroProps> = ({ personal }) => {
         <section
             id="home"
             ref={heroRef}
-            className="relative z-10 flex min-h-screen items-center justify-center overflow-hidden px-6"
+            className="relative z-10 flex min-h-screen items-center justify-center overflow-hidden px-4 sm:px-6"
         >
             <div className="mx-auto flex w-full max-w-4xl flex-col items-center text-center">
                 {/* Status Badge */}
-                <div ref={badgeRef} className="mb-8 opacity-0">
+                <div ref={badgeRef} className="mb-6 sm:mb-8 opacity-0 mt-16 sm:mt-0">
                     {personal.availableForWork && (
-                        <div className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent-subtle px-4 py-1.5">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent-subtle px-3 sm:px-4 py-1.5 maxWidthBadge">
                             <span className="relative flex h-2 w-2">
                                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
                                 <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
@@ -82,37 +82,29 @@ const Hero: React.FC<HeroProps> = ({ personal }) => {
                             <Shuffle
                                 text="Available for intern"
                                 tag="span"
-                                className="font-mono text-xs tracking-wide text-accent-light"
+                                className="font-mono text-[10px] sm:text-xs tracking-wide text-accent-light"
                                 shuffleDirection="right"
                                 duration={0.35}
                                 animationMode="evenodd"
                                 shuffleTimes={1}
-                                ease="power3.out"
-                                stagger={0.03}
-                                threshold={0.1}
-                                triggerOnce={true}
-                                triggerOnHover={false}
-                                respectReducedMotion={true}
-                                loop={false}
-                                loopDelay={0}
                             />
                         </div>
                     )}
                 </div>
 
                 {/* Headline with TextPressure */}
-                <div className="relative mb-4 w-full h-[100px] sm:h-[130px] md:h-[180px] lg:h-[220px]">
+                <div className="relative mb-4 w-full min-h-[60px] h-[80px] sm:h-[130px] md:h-[180px] lg:h-[220px] flex items-center justify-center">
                     <TextPressure
-                        text="SUTAN A.j."
+                        text="SUTAN A.J."
                         flex
-                        alpha
+                        alpha={false}
                         stroke={false}
                         width
                         weight
                         italic
                         textColor="#f3f1f1"
                         strokeColor="#8b5cf6"
-                        minFontSize={36}
+                        minFontSize={24}
                     />
                 </div>
 
