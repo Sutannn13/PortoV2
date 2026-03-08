@@ -142,95 +142,97 @@ const CertificatesPage: React.FC<CertificatesPageProps> = ({ certificates, onClo
                 </div>
             )}
 
-            <div className={`fixed inset-0 z-[100] overflow-y-auto overflow-x-hidden bg-[#050010] transition-opacity duration-1000 ${showIntro ? 'opacity-0' : 'opacity-100'}`}>
-                {/* ── Beams Background ── */}
-                <div className="fixed inset-0 z-0 opacity-40">
-                    <Beams
-                        beamWidth={3}
-                        beamHeight={30}
-                        beamNumber={20}
-                        lightColor="#decaca"
-                        speed={5.1}
-                        noiseIntensity={1.75}
-                        scale={0.2}
-                        rotation={30}
-                    />
-                </div>
-
-                {/* ── PillNav Header ── */}
-                <PillNav
-                    items={pillNavItems}
-                    baseColor="transparent"
-                    pillColor="rgba(6, 0, 16, 0.6)"
-                    hoveredPillTextColor="#060010"
-                    pillTextColor="#f0f0f5"
-                    onNavigate={handleNavClick}
-                />
-
-                {/* Content Container */}
-                <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-6 py-12 md:py-20 lg:py-24">
-                    <div className="mb-12 text-center sm:mb-16 md:mb-20 flex flex-col items-center gap-4">
-                        <span className="text-[#B19EEF] font-mono text-xs uppercase tracking-[0.25em]">
-                            My Certificates
-                        </span>
-                        <Shuffle
-                            text="Certificates & Awards"
-                            className="font-display text-3xl font-bold text-white sm:text-5xl md:text-6xl break-words"
-                            tag="h1"
-                            shuffleDirection="right"
-                            duration={0.35}
-                            animationMode="evenodd"
-                            shuffleTimes={2}
-                            ease="power3.out"
-                            stagger={0.03}
-                            threshold={0.1}
-                            triggerOnce={true}
-                            triggerOnHover
-                            respectReducedMotion={true}
+            <div className={`fixed inset-0 z-[100] overflow-y-auto overflow-x-hidden bg-[#050010] transition-opacity duration-1000`}>
+                <div className={`min-h-full transition-opacity duration-1000 ${showIntro ? 'opacity-0' : 'opacity-100'}`}>
+                    {/* ── Beams Background ── */}
+                    <div className="fixed inset-0 z-0 opacity-40">
+                        <Beams
+                            beamWidth={3}
+                            beamHeight={30}
+                            beamNumber={20}
+                            lightColor="#decaca"
+                            speed={5.1}
+                            noiseIntensity={1.75}
+                            scale={0.2}
+                            rotation={30}
                         />
                     </div>
 
-                    {/* NEW ACETERNITY UI Expandable Cards List Layout */}
-                    <ul className="max-w-2xl mx-auto w-full gap-4 flex flex-col">
-                        {certificates.map((cert) => (
-                            <motion.div
-                                layoutId={`card-${cert.title}-${id}`}
-                                key={`card-${cert.title}-${id}`}
-                                onClick={() => setActive(cert)}
-                                className="p-4 flex flex-col md:flex-row justify-between items-center hover:bg-neutral-800 rounded-xl cursor-pointer"
-                            >
-                                <div className="flex gap-4 flex-col md:flex-row ">
-                                    <motion.div layoutId={`image-${cert.title}-${id}`}>
-                                        <img
-                                            src={cert.imageUrl}
-                                            alt={cert.title}
-                                            className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-cover object-top"
-                                        />
-                                    </motion.div>
-                                    <div className="">
-                                        <motion.h3
-                                            layoutId={`title-${cert.title}-${id}`}
-                                            className="font-medium text-neutral-200 text-center md:text-left"
-                                        >
-                                            {cert.title}
-                                        </motion.h3>
-                                        <motion.p
-                                            layoutId={`description-${cert.issuer}-${id}`}
-                                            className="text-neutral-400 text-center md:text-left"
-                                        >
-                                            {cert.issuer}
-                                        </motion.p>
-                                    </div>
-                                </div>
-                                <motion.button
-                                    layoutId={`button-${cert.title}-${id}`}
-                                    className="px-4 py-2 text-sm rounded-full font-bold bg-neutral-100 hover:bg-green-500 hover:text-white text-black mt-4 md:mt-0"
+                    {/* ── PillNav Header ── */}
+                    <PillNav
+                        items={pillNavItems}
+                        baseColor="transparent"
+                        pillColor="rgba(6, 0, 16, 0.6)"
+                        hoveredPillTextColor="#060010"
+                        pillTextColor="#f0f0f5"
+                        onNavigate={handleNavClick}
+                    />
+
+                    {/* Content Container */}
+                    <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-6 py-12 md:py-20 lg:py-24">
+                        <div className="mb-12 text-center sm:mb-16 md:mb-20 flex flex-col items-center gap-4">
+                            <span className="text-[#B19EEF] font-mono text-xs uppercase tracking-[0.25em]">
+                                My Certificates
+                            </span>
+                            <Shuffle
+                                text="Certificates & Awards"
+                                className="font-display text-3xl font-bold text-white sm:text-5xl md:text-6xl break-words"
+                                tag="h1"
+                                shuffleDirection="right"
+                                duration={0.35}
+                                animationMode="evenodd"
+                                shuffleTimes={2}
+                                ease="power3.out"
+                                stagger={0.03}
+                                threshold={0.1}
+                                triggerOnce={true}
+                                triggerOnHover
+                                respectReducedMotion={true}
+                            />
+                        </div>
+
+                        {/* NEW ACETERNITY UI Expandable Cards List Layout */}
+                        <ul className="max-w-2xl mx-auto w-full gap-4 flex flex-col">
+                            {certificates.map((cert) => (
+                                <motion.div
+                                    layoutId={`card-${cert.title}-${id}`}
+                                    key={`card-${cert.title}-${id}`}
+                                    onClick={() => setActive(cert)}
+                                    className="p-4 flex flex-row justify-between items-center hover:bg-neutral-800 rounded-xl cursor-pointer"
                                 >
-                                    Lihat
-                                </motion.button>
-                            </motion.div>
-                        ))}
-                    </ul>
+                                    <div className="flex gap-3 md:gap-4 flex-row items-center w-full">
+                                        <motion.div layoutId={`image-${cert.title}-${id}`} className="shrink-0">
+                                            <img
+                                                src={cert.imageUrl}
+                                                alt={cert.title}
+                                                className="h-12 w-12 md:h-14 md:w-14 rounded-lg object-cover object-top"
+                                            />
+                                        </motion.div>
+                                        <div className="flex flex-col">
+                                            <motion.h3
+                                                layoutId={`title-${cert.title}-${id}`}
+                                                className="font-medium text-neutral-200 text-left text-sm md:text-base"
+                                            >
+                                                {cert.title}
+                                            </motion.h3>
+                                            <motion.p
+                                                layoutId={`description-${cert.issuer}-${id}`}
+                                                className="text-neutral-400 text-left text-xs md:text-sm"
+                                            >
+                                                {cert.issuer}
+                                            </motion.p>
+                                        </div>
+                                    </div>
+                                    <motion.button
+                                        layoutId={`button-${cert.title}-${id}`}
+                                        className="px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm rounded-full font-bold bg-neutral-100 hover:bg-green-500 hover:text-white text-black shrink-0 ml-2"
+                                    >
+                                        Lihat
+                                    </motion.button>
+                                </motion.div>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -241,21 +243,21 @@ const CertificatesPage: React.FC<CertificatesPageProps> = ({ certificates, onClo
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 bg-black/20 h-full w-full z-[1000]"
+                        className="fixed inset-0 bg-black/50 backdrop-blur-sm h-full w-full z-[1000]"
                     />
                 )}
             </AnimatePresence>
 
             <AnimatePresence>
                 {activeCard && (
-                    <div className="fixed inset-0 grid place-items-center z-[1001] px-4">
+                    <div className="fixed inset-0 grid place-items-center z-[1001] px-4 my-4 sm:my-0">
                         <motion.button
                             key={`button-${activeCard.title}-${id}`}
                             layout
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0, transition: { duration: 0.05 } }}
-                            className="flex absolute top-2 right-2 lg:hidden items-center justify-center bg-white rounded-full h-6 w-6 !z-[1002]"
+                            className="flex absolute top-4 right-4 lg:hidden items-center justify-center bg-white rounded-full h-8 w-8 !z-[1002] cursor-pointer"
                             onClick={() => setActive(null)}
                         >
                             <CloseIcon />
@@ -264,28 +266,28 @@ const CertificatesPage: React.FC<CertificatesPageProps> = ({ certificates, onClo
                         <motion.div
                             layoutId={`card-${activeCard.title}-${id}`}
                             ref={ref}
-                            className="w-full max-w-[500px] h-full md:h-fit md:max-h-[90%] flex flex-col bg-neutral-900 sm:rounded-3xl overflow-hidden"
+                            className="w-full max-w-[500px] h-auto md:h-fit max-h-[90vh] flex flex-col bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl"
                         >
                             <motion.div layoutId={`image-${activeCard.title}-${id}`}>
                                 <img
                                     src={activeCard.imageUrl}
                                     alt={activeCard.title}
-                                    className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
+                                    className="w-full h-56 sm:h-80 object-cover object-top"
                                 />
                             </motion.div>
 
-                            <div>
+                            <div className="flex-1 overflow-auto [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]">
                                 <div className="flex justify-between items-start p-4">
-                                    <div className="">
+                                    <div className="pr-4">
                                         <motion.h3
                                             layoutId={`title-${activeCard.title}-${id}`}
-                                            className="font-bold text-neutral-200"
+                                            className="font-bold text-neutral-200 text-base sm:text-lg"
                                         >
                                             {activeCard.title}
                                         </motion.h3>
                                         <motion.p
                                             layoutId={`description-${activeCard.issuer}-${id}`}
-                                            className="text-neutral-400"
+                                            className="text-neutral-400 text-sm sm:text-base mt-1"
                                         >
                                             {activeCard.issuer}
                                         </motion.p>
@@ -294,18 +296,18 @@ const CertificatesPage: React.FC<CertificatesPageProps> = ({ certificates, onClo
                                     <motion.button
                                         layoutId={`button-${activeCard.title}-${id}`}
                                         onClick={() => setActive(null)}
-                                        className="px-6 py-2 text-sm rounded-full font-bold bg-green-500 hover:bg-green-600 text-white"
+                                        className="px-4 py-2 sm:px-6 sm:py-2 text-sm rounded-full font-bold bg-green-500 hover:bg-green-600 text-white shrink-0 mt-1 md:mt-0"
                                     >
                                         Tutup
                                     </motion.button>
                                 </div>
-                                <div className="pt-4 relative px-4">
+                                <div className="pt-2 relative px-4 pb-6">
                                     <motion.div
                                         layout
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
-                                        className="text-neutral-400 text-xs md:text-sm lg:text-base h-auto pb-4 flex flex-col items-start gap-4 overflow-auto [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
+                                        className="text-neutral-400 text-xs md:text-sm lg:text-base h-auto flex flex-col items-start gap-4"
                                     >
                                         {certContent[activeCard.id] ?? <p>Sertifikat ini diraih atas penghargaan {activeCard.title}.</p>}
                                     </motion.div>

@@ -617,7 +617,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                                     {name}
                                 </h3>
                                 <p
-                                    className="font-semibold text-center whitespace-nowrap mx-auto"
+                                    className="font-semibold text-center whitespace-normal mx-auto leading-tight px-2"
                                     style={{
                                         position: 'relative',
                                         top: '-4px',
