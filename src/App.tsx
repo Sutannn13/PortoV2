@@ -9,6 +9,7 @@ import Projects from '@/components/sections/Projects';
 import Skills from '@/components/sections/Skills';
 import Certificates from '@/components/sections/Certificates';
 import Contact from '@/components/sections/Contact';
+import Experience from '@/components/sections/Experience';
 import GitHubSection from '@/components/sections/GitHubSection';
 import CountUp from '@/components/reactbits/CountUp';
 import GradientText from '@/components/reactbits/GradientText';
@@ -19,7 +20,7 @@ import GradientText from '@/components/reactbits/GradientText';
 import portfolioData from '../sosial/data';
 
 function App() {
-  const { personal, projects, certificates, navigation } = portfolioData;
+  const { personal, projects, certificates, experiences, navigation } = portfolioData;
   const [showIntro, setShowIntro] = useState(true);
   const [introFading, setIntroFading] = useState(false);
 
@@ -81,6 +82,7 @@ function App() {
         <Hero personal={personal} />
         <ProfileCardSection personal={personal} />
         <About personal={personal} />
+        <Experience experiences={experiences} />
         <Projects projects={projects} />
         <Skills />
         <Certificates certificates={certificates} />

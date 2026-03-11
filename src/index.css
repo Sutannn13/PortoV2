@@ -52,6 +52,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  overflow-x: hidden;
+  width: 100vw;
 }
 
 body {
@@ -60,6 +62,12 @@ body {
   color: var(--color-text-primary);
   line-height: 1.7;
   overflow-x: hidden;
+  width: 100%;
+}
+
+#root {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 ::selection {
@@ -229,3 +237,73 @@ body {
 .split-line {
   will-change: transform, opacity;
 }
+
+/* ─────────────────────────────────────────────
+   Reduced Motion — Accessibility
+   ───────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .aurora-bg {
+    opacity: 0.3;
+  }
+
+  .animate-ping {
+    animation: none !important;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Mobile-specific Responsive Improvements
+   ───────────────────────────────────────────── */
+
+/* Ensure touch targets are at least 44px on mobile */
+@media (max-width: 640px) {
+  a, button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Reduce section spacing on mobile */
+  .py-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  /* Fix overflow issues on small screens */
+  body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Make text more readable on mobile */
+  p {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+  }
+}
+
+/* iPhone SE specific (375px) */
+@media (max-width: 375px) {
+  .py-section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
+/* Tablet improvements */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .py-section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+

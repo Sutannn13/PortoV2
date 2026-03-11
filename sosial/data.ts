@@ -14,7 +14,7 @@ const portfolioData: PortfolioData = {
         lastName: 'Johan',
         title: 'Software & Back-End Engineer',
         tagline: 'Crafting elegant digital experiences with precision and purpose.',
-        bio: `I am a proactive and highly adaptable Information Technology student at Universitas Bina Sarana Informatika, Depok. With hands-on experience in logistics (Lazada Indonesia) and customer service, I bring a blend of real-world work ethic and technical depth. As Project Manager of a 9-person team in the UBSI IT Bootcamp, I led the development of "Trash Point" — a web-based waste management app — earning 2nd place and securing an official HKI Intellectual Property Certificate. I bridge the gap between technical infrastructure and user-centric solutions, with expertise spanning networking (MikroTik MTCNA, Cisco) and modern web frameworks (React, Laravel, TypeScript).`,
+        bio: `I am a proactive and highly adaptable Information Technology student at Universitas Bina Sarana Informatika, Depok. I bring a strong work ethic and technical depth to engineering challenges. As Project Manager of a 9-person team in the UBSI IT Bootcamp, I led the development of "Trash Point" — a web-based waste management app — earning 2nd place and securing an official HKI Intellectual Property Certificate. I also collaborated with a university lecturer to build an E-Commerce Platform for fresh fish transactions. I bridge the gap between technical infrastructure and user-centric solutions, with expertise spanning networking (MikroTik MTCNA, Cisco) and modern web frameworks (React, Laravel, TypeScript).`,
         shortBio: 'Developer. Engineer. Creator.',
         email: 'sutanarliejohan@gmail.com',
         location: 'Bogor, Indonesia',
@@ -72,6 +72,21 @@ const portfolioData: PortfolioData = {
             title: 'Trash Point',
             description:
                 'Inovasi sistem pengelolaan sampah cerdas yang dikembangkan pada bootcamp. Meraih Juara 2 se-UBSI Jawa Barat, dengan fitur pelacakan lokasi titik sampah, dashboard analitik, dan sistem reward berbasis poin.',
+            longDescription: `
+                <div class="space-y-4">
+                    <h4 class="text-xl font-semibold text-white">Latar Belakang</h4>
+                    <p>Pengelolaan sampah seringkali menjadi masalah krusial di lingkungan urban. Kurangnya fasilitas yang terhubung dan kesadaran masyarakat menyebabkan banyak wilayah yang membuang sampah sembarangan. <strong>Trash Point</strong> diinisiasi sebagai solusi digital yang proaktif, menghubungkan masyarakat dengan manajemen sampah secara real-time.</p>
+                    <h4 class="text-xl font-semibold text-white mt-6">Solusi & Fitur Utama</h4>
+                    <p>Aplikasi web ini menghadirkan sistem pelacakan titik sampah terdekat dengan peta interaktif. Kami menerapkan model insentif berbasis poin di mana setiap pelaporan atau pembuangan sampah pada tempatnya dapat dikonversi menjadi hadiah.</p>
+                    <ul class="list-disc pl-5 space-y-2 mt-2">
+                        <li><strong>Dashboard Analitik:</strong> Memudahkan admin untuk memantau tren penumpukan sampah di berbagai distrik.</li>
+                        <li><strong>Reward System:</strong> Menggunakan struktur poin agar masyarakat memiliki motivasi lebih tinggi dalam menjaga kebersihan lingkungan.</li>
+                        <li><strong>Pelaporan Real-time:</strong> Pelaporan cepat lokasi yang darurat membutuhkan penanganan kebersihan.</li>
+                    </ul>
+                    <h4 class="text-xl font-semibold text-white mt-6">Dampak & Prestasi</h4>
+                    <p>Proyek ini tidak hanya sekadar prototipe fungsional; dengan koordinasi tim yang solid, dedikasi, serta validasi kelayakan bisnis, proyek <strong>Trash Point</strong> sukses menempati posisi <strong>Juara 2 dalam ajang IT Bootcamp se-Universitas Bina Sarana Informatika Jawa Barat</strong>. Lebih lanjut, karya inovatif ini telah resmi menerima <strong>Sertifikat Hak Kekayaan Intelektual (HKI)</strong>.</p>
+                </div>
+            `,
             techStack: ['Laravel', 'PHP', 'MySQL', 'Tailwind CSS', 'JavaScript'],
             imageUrl: '/sosial/HKI.jpeg',
             featured: true,
@@ -83,6 +98,21 @@ const portfolioData: PortfolioData = {
             title: 'E-Commerce Platform for Fresh Fish Transactions',
             description:
                 'Platform e-commerce khusus transaksi ikan segar, lengkap dengan manajemen produk, sistem keranjang belanja, payment gateway, dan dashboard admin untuk memantau penjualan secara real-time.',
+            longDescription: `
+                <div class="space-y-4">
+                    <h4 class="text-xl font-semibold text-white">Tinjauan Proyek</h4>
+                    <p>Pasar perikanan lokal kerap kali menghadapi kendala distribusi yang memakan waktu sehingga kesegaran hasil tangkapan menurun saat mencapai konsumen akhir. E-Commerce Platform khusus transaksi ikan segar ini dirancang dari nol bekerja sama dengan dosen universitas untuk memotong perantara (middle-men), memberdayakan nelayan lokal, dan menghadirkan ikan kualitas premium langsung ke tangan pelanggan secara efisien.</p>
+                    <h4 class="text-xl font-semibold text-white mt-6">Arsitektur & Pengembangan</h4>
+                    <p>Secara teknis, platform ini dibangun menggunakan <strong>Laravel & PHP</strong> sebagai fondasi *backend* yang melayani manajemen pengelolaan produk, stok inventaris, serta autentikasi berbasis *role* (pengguna vs admin). UI/UX di sisi publik dan area dashboard diformulasikan dengan <strong>Tailwind CSS</strong> agar sepenuhnya responsif pada segala ukuran perangkat seluler dan desktop.</p>
+                    <ul class="list-disc pl-5 space-y-2 mt-2">
+                        <li><strong>Modul Manajemen Inventaris:</strong> Monitoring level stok Ikan Nila & Ikan Mas Premium secara akurat.</li>
+                        <li><strong>Gateway Pembayaran:</strong> Integrasi API transaksi digital guna memberikan kemudahan belanja dan tingkat keamanan yang sesuai standar industri.</li>
+                        <li><strong>Admin Dashboard:</strong> Visualisasi grafik data untuk analitik pesanan dan pantauan pendapatan secara real-time.</li>
+                    </ul>
+                    <h4 class="text-xl font-semibold text-white mt-6">Hasil Akhir</h4>
+                    <p>Aplikasi ini sukses mendemonstrasikan sistem tata kelola bisnis berbasis *Full-Stack* yang solid dengan arsitektur database relasional (MySQL) dengan pengelolaan *state* keranjang belanja yang persisten dan alur *checkout* transaksi yang ramah pengguna.</p>
+                </div>
+            `,
             techStack: ['Laravel', 'PHP', 'MySQL', 'Tailwind CSS', 'JavaScript'],
             imageUrl: '/sosial/fish market.png',
             repoUrl: 'https://github.com/Sutannn13/E-commerce-platform-for-fresh-fish-transactions.git',
@@ -94,6 +124,19 @@ const portfolioData: PortfolioData = {
     experiences: [
         {
             id: 'e1',
+            role: 'Asisten Peneliti Dosen',
+            company: 'Universitas Bina Sarana Informatika, Project Base',
+            location: 'Depok, Indonesia',
+            startDate: 'Sept 2025',
+            endDate: 'Jan 2026',
+            description:
+                'Berpartisipasi dalam riset pengembangan aplikasi mobile gamifikasi untuk edukasi pencegahan pelecehan seksual pada anak usia dini.',
+            highlights: [
+                'Bertanggung jawab melaksanakan User Acceptance Testing (UAT) dengan mengumpulkan feedback kualitatif dari responden (guru dan orang tua) untuk analisis kelayakan aplikasi.',
+            ],
+        },
+        {
+            id: 'e2',
             role: 'Project Manager & Lead Developer',
             company: 'IT Bootcamp — Universitas Bina Sarana Informatika',
             location: 'Depok, Indonesia',
@@ -109,31 +152,18 @@ const portfolioData: PortfolioData = {
             ],
         },
         {
-            id: 'e2',
-            role: 'Warehouse Sorter — Daily Worker',
-            company: 'Lazada Indonesia',
-            location: 'Depok, Jawa Barat',
-            startDate: 'Jan 2024',
-            endDate: 'Apr 2025',
-            description:
-                'Responsible for sorting and scanning thousands of packages daily to ensure accurate delivery to the next distribution hub.',
-            highlights: [
-                'Consistently met individual and team daily throughput targets',
-                'Operated efficiently in a high-speed, fast-paced warehouse environment',
-            ],
-        },
-        {
             id: 'e3',
-            role: 'Waiter — Part-time',
-            company: 'Rumah Makan Pondok Bambu',
-            location: 'Depok, Jawa Barat',
-            startDate: 'Apr 2023',
-            endDate: 'Aug 2023',
+            role: 'Full-Stack Developer',
+            company: 'Universitas Bina Sarana Informatika (University Project)',
+            location: 'Depok, Indonesia',
+            startDate: '2023',
+            endDate: '2024',
             description:
-                'Delivered friendly and responsive customer service, managing multiple table orders simultaneously from order-taking to serving.',
+                'Collaborated with a university lecturer to build an E-Commerce Platform for Fresh Fish Transactions from the ground up.',
             highlights: [
-                'Collaborated effectively with kitchen and cashier teams during peak hours',
-                'Improved overall guest experience through attentive service',
+                'Developed a specialized e-commerce system including product management, shopping cart, and checkout flow',
+                'Integrated a payment gateway and implemented an admin dashboard for real-time sales monitoring',
+                'Utilized Laravel, PHP, MySQL, and Tailwind CSS to ensure a robust and responsive user experience',
             ],
         },
     ],
@@ -172,6 +202,7 @@ const portfolioData: PortfolioData = {
     navigation: [
         { id: 'nav-home', label: 'Home', href: '#home' },
         { id: 'nav-about', label: 'About', href: '#about' },
+        { id: 'nav-experience', label: 'Experience', href: '#experience' },
         { id: 'nav-projects', label: 'Projects', href: '#projects' },
         { id: 'nav-skills', label: 'Skills', href: '#skills' },
         { id: 'nav-certificates', label: 'Certificates', href: '#certificates' },

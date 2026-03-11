@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/index.css",
+    "baseColor": "slate",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  },
+  "iconLibrary": "lucide",
+  "registries": {
+    "@aceternity": {
+      "url": "https://ui.aceternity.com/registry/{name}.json",
+      "headers": {
+        "Authorization": "Bearer aceternity_b5d826feb5fbd5f4dc51da6d24578d046740fccc77319f838a6af826292cda2d"
+      }
+    }
+  }
+}
