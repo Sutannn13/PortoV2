@@ -9,9 +9,9 @@ import {
     Physics,
     RigidBody,
     useRopeJoint,
-    useSphericalJoint,
-    type RigidBodyProps
+    useSphericalJoint
 } from '@react-three/rapier';
+import type { RigidBodyProps } from '@react-three/rapier';
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import * as THREE from 'three';
 
@@ -21,6 +21,19 @@ import cardGLB from './card.glb';
 import lanyardTexture from './LanyardKu.png';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
+
+declare module '@react-three/fiber' {
+    interface ThreeElements {
+        meshLineGeometry: ThreeElements['bufferGeometry'];
+        meshLineMaterial: ThreeElements['meshStandardMaterial'] & {
+            lineWidth?: number;
+            map?: THREE.Texture;
+            useMap?: boolean;
+            repeat?: [number, number];
+            resolution?: [number, number];
+        };
+    }
+}
 
 interface LanyardProps {
     position?: [number, number, number];
@@ -285,9 +298,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
 
             {/* ── Lanyard band: uses LanyardKu.png with tiling ── */}
             <mesh ref={band}>
-                {/* @ts-expect-error - MeshLineGeometry is from meshline library */}
                 <meshLineGeometry />
-                {/* @ts-expect-error - MeshLineMaterial is from meshline library */}
                 <meshLineMaterial
                     color="white"
                     depthTest={false}

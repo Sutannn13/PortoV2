@@ -119,6 +119,32 @@ const portfolioData: PortfolioData = {
             featured: true,
             category: 'Web App',
         },
+        {
+            id: 'p3',
+            title: 'Website HMTI BSI Margonda',
+            description:
+                'Website resmi Himpunan Mahasiswa Teknologi Informasi (HMTI) Universitas Bina Sarana Informatika kampus Margonda — platform digital organisasi untuk informasi kegiatan, pengumuman, dan profil kepengurusan.',
+            longDescription: `
+                <div class="space-y-4">
+                    <h4 class="text-xl font-semibold text-white">Tentang Proyek</h4>
+                    <p><strong>HMTI BSI Margonda</strong> adalah organisasi kemahasiswaan di bawah Program Studi Teknologi Informasi, Universitas Bina Sarana Informatika. Website ini dikembangkan sebagai platform digital resmi HMTI untuk menampilkan informasi organisasi, agenda kegiatan, pengumuman, dan galeri dokumentasi kemahasiswaan.</p>
+                    <h4 class="text-xl font-semibold text-white mt-6">Fitur & Arsitektur</h4>
+                    <p>Dibangun menggunakan <strong>Laravel</strong> dengan arsitektur MVC yang terstruktur rapi. Blade templating digunakan di sisi frontend untuk rendering tampilan yang dinamis dan responsif di berbagai perangkat.</p>
+                    <ul class="list-disc pl-5 space-y-2 mt-2">
+                        <li><strong>Halaman Profil Organisasi:</strong> Menampilkan visi-misi, struktur kepengurusan, dan identitas HMTI secara profesional.</li>
+                        <li><strong>Manajemen Konten Dinamis:</strong> Sistem backend untuk mengelola berita, agenda kegiatan, dan pengumuman secara real-time.</li>
+                        <li><strong>Desain Responsif:</strong> Tampilan optimal di semua ukuran layar menggunakan Tailwind CSS dan Vite sebagai build tool modern.</li>
+                    </ul>
+                    <h4 class="text-xl font-semibold text-white mt-6">Konteks Pengembangan</h4>
+                    <p>Proyek ini merupakan kontribusi nyata dalam ekosistem kampus UBSI, mendukung digitalisasi kegiatan kemahasiswaan dan memperkuat identitas digital HMTI di tingkat universitas.</p>
+                </div>
+            `,
+            techStack: ['Laravel', 'PHP', 'Blade', 'MySQL', 'Tailwind CSS', 'Vite'],
+            imageUrl: '/sosial/hmti.png',
+            repoUrl: 'https://github.com/Sutannn13/HMTI-Margonda.git',
+            featured: true,
+            category: 'Organization Website',
+        },
     ],
 
     experiences: [
