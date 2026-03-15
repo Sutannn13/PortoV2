@@ -15,7 +15,7 @@ const portfolioData: PortfolioData = {
         lastName: 'Johan',
         title: 'Software & Back-End Engineer',
         tagline: 'Crafting elegant digital experiences with precision and purpose.',
-        bio: `I am a proactive and highly adaptable Information Technology student at Universitas Bina Sarana Informatika, Depok. I bring a strong work ethic and technical depth to engineering challenges. As Project Manager of a 9-person team in the UBSI IT Bootcamp, I led the development of "Trash Point" — a web-based waste management app — earning 2nd place and securing an official HKI Intellectual Property Certificate. I also collaborated with a university lecturer to build an E-Commerce Platform for fresh fish transactions. I bridge the gap between technical infrastructure and user-centric solutions, with expertise spanning networking (MikroTik MTCNA, Cisco) and modern web frameworks (React, Laravel, TypeScript).`,
+        bio: `I am a proactive Information Technology student and researcher at Universitas Bina Sarana Informatika (UBSI), Depok. My work spans software engineering, academic research, and community empowerment. As a researcher and app developer, I co-developed SALI (Sadar dan Lindungi) — a gamified mobile application designed to educate and prevent child sexual abuse (CSA) for early childhood. I am a published academic contributor, with work featured in Jurnal Ilmu Pengetahuan dan Teknologi Komputer (JITK) on user experience evaluation of educational applications. I actively engage in community service, including facilitating community-based Digital Marketing training to help individuals create compelling visual content. I am also a registered inventor and copyright holder under Indonesia's Directorate General of Intellectual Property (HKI) for technological innovations — including co-leading "Trash Point," a smart waste management app that earned 2nd place at the UBSI Jawa Barat IT Bootcamp. I bridge technical engineering with real-world impact, with expertise in modern web frameworks (React, Laravel, TypeScript) and networking (MikroTik MTCNA, Cisco).`,
         shortBio: 'Developer. Engineer. Creator.',
         email: 'sutanarliejohan@gmail.com',
         location: 'Bogor, Indonesia',
@@ -151,15 +151,19 @@ const portfolioData: PortfolioData = {
     experiences: [
         {
             id: 'e1',
-            role: 'Asisten Peneliti Dosen',
+            role: 'Peneliti & Pengembang Aplikasi',
             company: 'Universitas Bina Sarana Informatika, Project Base',
             location: 'Depok, Indonesia',
             startDate: 'Sept 2025',
             endDate: 'Jan 2026',
             description:
-                'Berpartisipasi dalam riset pengembangan aplikasi mobile gamifikasi untuk edukasi pencegahan pelecehan seksual pada anak usia dini.',
+                'Co-developed SALI (Sadar dan Lindungi), a gamified mobile application for educating early childhood about preventing child sexual abuse (CSA). Contributed to academic publication on UX evaluation and facilitated community-based Digital Marketing training.',
             highlights: [
-                'Bertanggung jawab melaksanakan User Acceptance Testing (UAT) dengan mengumpulkan feedback kualitatif dari responden (guru dan orang tua) untuk analisis kelayakan aplikasi.',
+                'Co-developed SALI — a gamified mobile education app for child sexual abuse (CSA) prevention targeting early childhood users.',
+                'Conducted User Acceptance Testing (UAT) by collecting qualitative feedback from teachers and parents for application feasibility analysis.',
+                'Co-authored a research paper published in Jurnal Ilmu Pengetahuan dan Teknologi Komputer (JITK) on user experience evaluation of educational applications.',
+                'Facilitated community-based Digital Marketing training to help participants develop visual content creation skills.',
+                'Registered as inventor/copyright holder under Direktorat Jenderal Kekayaan Intelektual (HKI Indonesia) for the SALI application.',
             ],
         },
         {
