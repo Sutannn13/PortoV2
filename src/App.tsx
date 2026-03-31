@@ -21,7 +21,9 @@ import portfolioData from '../sosial/data';
 
 function App() {
   const { personal, projects, certificates, experiences, navigation } = portfolioData;
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(() => {
+    return sessionStorage.getItem('hasSeenIntro') !== 'true';
+  });
   const [introFading, setIntroFading] = useState(false);
 
   // Convert NavItem[] to PillNav format
@@ -50,6 +52,7 @@ function App() {
                 duration={5}
                 onEnd={() => {
                   setIntroFading(true);
+                  sessionStorage.setItem('hasSeenIntro', 'true');
                   setTimeout(() => setShowIntro(false), 1000);
                 }}
               />

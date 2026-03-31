@@ -1,4 +1,0 @@
-﻿src/components/reactbits/SplitText.tsx(193,10): error TS2745: This JSX tag's 'children' prop expects type 'never' which requires multiple children, but only a single child was provided.
-src/components/reactbits/SplitText.tsx(194,13): error TS2322: Type 'any' is not assignable to type 'never'.
-src/components/reactbits/SplitText.tsx(195,13): error TS2322: Type 'CSSProperties' is not assignable to type 'never'.
-src/components/reactbits/SplitText.tsx(196,13): error TS2322: Type 'string' is not assignable to type 'never'.

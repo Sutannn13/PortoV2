@@ -45,7 +45,9 @@ export const CloseIcon = () => {
 };
 
 const CertificatesPage: React.FC<CertificatesPageProps> = ({ certificates, onClose }) => {
-    const [showIntro, setShowIntro] = useState(true);
+    const [showIntro, setShowIntro] = useState(() => {
+        return sessionStorage.getItem('hasSeenIntro') !== 'true';
+    });
     const [introFading, setIntroFading] = useState(false);
 
     // Aceternity UI Expansion state
@@ -133,6 +135,7 @@ const CertificatesPage: React.FC<CertificatesPageProps> = ({ certificates, onClo
                                 duration={5}
                                 onEnd={() => {
                                     setIntroFading(true);
+                                    sessionStorage.setItem('hasSeenIntro', 'true');
                                     setTimeout(() => setShowIntro(false), 1000);
                                 }}
                             />

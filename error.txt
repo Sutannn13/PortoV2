@@ -1,2 +1,0 @@
-src/components/reactbits/Folder.tsx(66,36): error TS6133: 'e' is declared but its value is never read.
-src/components/reactbits/RotatingText.tsx(5,5): error TS1484: 'Transition' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.

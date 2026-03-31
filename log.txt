@@ -1,0 +1,15 @@
+7750a59 Merge pull request #1 from Sutannn13:copilot/update-biodata-sutan-arlie-johan
+712117c update biodata: add SALI research, JITK publication, Digital Marketing training, and HKI details
+932a849 Initial plan
+7c6e776 feat: replace cv
+e00c225 fix:anoter bug on selected projects
+de85a61 feat: add new page for project
+53fdc0a imjin gatau
+cf9b08b ijin serius aowkwkwk
+84e9b05 kuran tawu
+3425c99 penambahan fitur
+32c5e0d fix bug portofolio
+cb1f755 ijn serius
+8754ef7 update for mobile device
+75077aa ijin seriusV2
+4972578 ijin serius

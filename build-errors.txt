@@ -1,3 +1,0 @@
-﻿src/components/reactbits/Lanyard.tsx(13,5): error TS1484: 'RigidBodyProps' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
-src/components/reactbits/Lanyard.tsx(239,17): error TS2339: Property 'meshLineGeometry' does not exist on type 'JSX.IntrinsicElements'.
-src/components/reactbits/Lanyard.tsx(240,17): error TS2339: Property 'meshLineMaterial' does not exist on type 'JSX.IntrinsicElements'.
